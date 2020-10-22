@@ -4,6 +4,7 @@ package com.qf.controller;
 import com.qf.pojo.Params;
 import com.qf.pojo.User;
 import com.qf.service.UserService;
+import com.qf.utils.ImageCut;
 import com.qf.utils.MailUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 
 @Controller
@@ -121,7 +123,8 @@ public class UserController {
     }
 
     @RequestMapping("upLoadImage")
-    public String upLoadImage(MultipartFile image_file, HttpServletRequest request) {
+    public String upLoadImage(MultipartFile image_file,String x1, String x2, String y1, String y2,
+                              HttpServletRequest request) throws IOException {
 
         HttpSession session = request.getSession(false);
         String email = (String) session.getAttribute("email");
@@ -129,20 +132,30 @@ public class UserController {
         params.setEmail(email);
         User user = userService.queryOne(params);
 
-        String photoOriginalFilename = image_file.getOriginalFilename();
-        String route = "F:\\apache-tomcat-8.5.41\\webapps\\video\\";
-        File file = new File(route + photoOriginalFilename);
-
-        if (photoOriginalFilename !="") {
-            try {
-                image_file.transferTo(file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            user.setImgurl(photoOriginalFilename);
+        String path = "F:\\apache-tomcat-8.5.41\\webapps\\video\\";
+        File file = new File(path);
+        if (!file.exists()) {
+            file.mkdirs();
         }
 
+        String filename = image_file.getOriginalFilename();
+        filename = filename.substring(filename.lastIndexOf("."));
+        String uuid = UUID.randomUUID().toString().replace("-", "");
+        filename = uuid + filename;
+        image_file.transferTo(new File(path, filename));
+
+        if(!(x1.equals(""))) {
+            int x1Int = (int) Double.parseDouble(x1);
+            int x2Int = (int) Double.parseDouble(x2);
+            int y1Int = (int) Double.parseDouble(y1);
+            int y2Int = (int) Double.parseDouble(y2);
+
+            new ImageCut().cutImage(path + "/" + filename, x1Int, y1Int, x2Int - x1Int, y2Int - y1Int);
+
+        }
+        user.setImgurl(filename);
         userService.update(user);
+
 
         return "redirect:/user/showMyProfile";
     }
