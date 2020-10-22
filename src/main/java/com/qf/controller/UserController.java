@@ -39,6 +39,7 @@ public class UserController {
             HttpSession session = request.getSession(true);
             session.setMaxInactiveInterval(60*60*24*10);
             session.setAttribute("email",email);
+            session.setAttribute("userAccount",email);
             return "success";
         }
     }

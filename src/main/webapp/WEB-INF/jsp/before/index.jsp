@@ -201,8 +201,10 @@
                 <input type="hidden" name="do" value="2"/>
                 <input type="hidden" name="ip" value=""/>
                 <input type="hidden" name="time" value=""/>
-                <div><label for="name">姓名：</label><input name="name" id="name" type="text" class="form-control"/></div>
-                <div><label for="tel">手机号：</label><input name="tel" id="tel" type="text" class="form-control"/></div>
+                <div><label for="name">姓名：</label><input name="name" id="name" type="text" class="form-control" /></div>
+
+                <div><label for="tel">手机号：</label><input name="tel" id="tel" type="text" class="form-control" /></div>
+                
                 <div><label for="qq">QQ：</label><input name="qq" id="qq" type="text" class="form-control"/></div>
             </div>
             <input class="button" type="submit" value="立即报名"/>

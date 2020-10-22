@@ -18,4 +18,6 @@ public interface VideoService {
     void updateByPrimaryKey(Integer id);
 
     List<Video> findAllVideos(QueryVo queryVo);
+
+    void updatePlayNum(Video video);
 }

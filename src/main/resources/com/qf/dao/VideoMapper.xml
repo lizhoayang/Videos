@@ -23,7 +23,7 @@
   </resultMap>
 
   <select id="selectVideoById" resultMap="BaseResultMap">
-    select video.id,video.video_url,video.image_url,video.title,speaker.speaker_name,speaker.speaker_desc,video.detail,head_img_url,speaker.id as spe_id
+    select video.id,video.video_url,video.image_url,video.title,speaker.speaker_name,speaker.speaker_desc,video.detail,head_img_url,play_num,speaker.id as spe_id
     from video inner join speaker on speaker.id = speaker_id
     where video.id = #{videoId}
   </select>

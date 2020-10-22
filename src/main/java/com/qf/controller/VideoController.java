@@ -126,4 +126,12 @@ public class VideoController {
         return "redirect:/video/list";
     }
 
+    @RequestMapping("updatePlayNum")
+    public void updatePlayNum(Video video) {
+
+        video.setPlayNum(video.getPlayNum() + 1);
+
+        videoService.updatePlayNum(video);
+    }
+
 }

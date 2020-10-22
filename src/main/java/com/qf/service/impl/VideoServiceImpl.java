@@ -52,5 +52,10 @@ public class VideoServiceImpl implements VideoService {
         return videoMapper.findAllVideos(queryVo);
     }
 
+    @Override
+    public void updatePlayNum(Video video) {
+        videoMapper.updateByPrimaryKeySelective(video);
+    }
+
 
 }
